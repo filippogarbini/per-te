@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Per te ❤️</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500&family=Poppins:wght@300;400&display=swap');
+
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(180deg, #ffe6ec, #fff);
+  overflow-x: hidden;
+  color: #333;
+  text-align: center;
+}
+
+h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.5em;
+  margin-top: 40px;
+}
+
+.subtitle {
+  font-size: 1em;
+  color: #777;
+  margin-bottom: 40px;
+}
+
+.container {
+  max-width: 600px;
+  margin: auto;
+  padding: 20px;
+}
+
+button {
+  background: #ff8fa3;
+  border: none;
+  border-radius: 30px;
+  padding: 14px 22px;
+  color: white;
+  font-size: 1em;
+  margin: 12px 0;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 100%;
+}
+
+button:hover {
+  background: #ff6f91;
+  box-shadow: 0 0 15px rgba(255,111,145,0.6);
+}
+
+.message {
+  display: none;
+  margin-top: 10px;
+  font-size: 1.05em;
+  animation: fadeIn 1s ease forwards;
+}
+
+.final {
+  display: none;
+  margin-top: 40px;
+  font-size: 1.2em;
+  font-family: 'Playfair Display', serif;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Cuori */
+.heart {
+  position: fixed;
+  bottom: -20px;
+  font-size: 20px;
+  animation: float 6s linear infinite;
+  opacity: 0.6;
+}
+
+@keyframes float {
+  0% { transform: translateY(0); opacity: 0.6; }
+  100% { transform: translateY(-110vh); opacity: 0; }
+}
+
+.music {
+  margin-top: 30px;
+  font-size: 0.9em;
+}
+</style>
+</head>
+
+<body>
+
+<h1>Per te ❤️</h1>
+<div class="subtitle">Aprilo ogni volta che ti manco</div>
+
+<div class="container">
+
+<button onclick="reveal(0)">Apri se ti manco</button>
+<div class="message">Non importa dove siamo: una parte di me ti sta sempre cercando.</div>
+
+<button onclick="reveal(1)">Clicca se sorridi</button>
+<div class="message">Il tuo sorriso è il mio posto sicuro.</div>
+
+<button onclick="reveal(2)">Solo per te</button>
+<div class="message">Ti sceglierei anche nei giorni difficili. Soprattutto in quelli.</div>
+
+<button onclick="reveal(3)">Un segreto ❤️</button>
+<div class="message">Non sei un capitolo della mia vita. Sei il libro.</div>
+
+<button onclick="reveal(4)">Quando dubiti</button>
+<div class="message">Sei abbastanza. Sempre stata. Sempre sarai.</div>
+
+<button onclick="reveal(5)">Promessa</button>
+<div class="message">Finché avrò un domani, ci sarà un “noi”.</div>
+
+<div class="final" id="finalMessage">
+Se sei arrivata fin qui,<br>
+significa che sei la cosa più bella<br>
+che mi sia mai successa.
+</div>
+
+<div class="music">
+<button onclick="toggleMusic()">🎶 Musica</button>
+</div>
+
+</div>
+
+<audio id="bgMusic" loop>
+  <source src="https://cdn.pixabay.com/audio/2022/03/15/audio_5c1a8c9e99.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+let opened = 0;
+
+function reveal(index) {
+  const messages = document.querySelectorAll('.message');
+  if (messages[index].style.display !== "block") {
+    messages[index].style.display = "block";
+    opened++;
+    spawnHeart();
+  }
+  if (opened === messages.length) {
+    document.getElementById("finalMessage").style.display = "block";
+  }
+}
+
+function spawnHeart() {
+  const heart = document.createElement("div");
+  heart.className = "heart";
+  heart.innerHTML = "❤️";
+  heart.style.left = Math.random() * 100 + "vw";
+  heart.style.animationDuration = (4 + Math.random() * 3) + "s";
+  document.body.appendChild(heart);
+  setTimeout(() => heart.remove(), 6000);
+}
+
+let playing = false;
+function toggleMusic() {
+  const music = document.getElementById("bgMusic");
+  if (!playing) {
+    music.play();
+    playing = true;
+  } else {
+    music.pause();
+    playing = false;
+  }
+}
+</script>
+
+</body>
+</html>
