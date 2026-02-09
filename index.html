@@ -101,13 +101,6 @@ button:hover {
 .music-box {
   margin: 30px 0;
 }
-
-iframe {
-  display: none;
-  margin-top: 15px;
-  width: 100%;
-  border-radius: 12px;
-}
 </style>
 </head>
 
@@ -125,12 +118,7 @@ come il mio modo di dirti che ti amo.
 <div class="container">
 
 <div class="music-box">
-  <button onclick="playMusic()">🎶 Ascolta la nostra canzone</button>
-  <iframe id="musicPlayer"
-    src="https://www.youtube.com/embed/9yD5tM4dE0E?autoplay=1"
-    allow="autoplay; encrypted-media"
-    allowfullscreen>
-  </iframe>
+  <button onclick="openMusic()">🎶 Ascolta la nostra canzone</button>
 </div>
 
 <img id="fotoInizio" src="IMG_3731.png" alt="Noi">
@@ -207,8 +195,11 @@ function spawnHeart() {
   setTimeout(() => heart.remove(), 7000);
 }
 
-function playMusic() {
-  document.getElementById("musicPlayer").style.display = "block";
+function openMusic() {
+  window.open(
+    "https://www.youtube.com/watch?v=9yD5tM4dE0E",
+    "_blank"
+  );
 }
 </script>
 
