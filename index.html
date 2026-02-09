@@ -12,7 +12,6 @@ body {
   margin: 0;
   font-family: 'Poppins', sans-serif;
   background: linear-gradient(180deg, #ffe6ec, #fff);
-  overflow-x: hidden;
   color: #333;
   text-align: center;
 }
@@ -20,19 +19,25 @@ body {
 h1 {
   font-family: 'Playfair Display', serif;
   font-size: 2.5em;
-  margin-top: 40px;
+  margin-top: 30px;
 }
 
 .subtitle {
   font-size: 1em;
   color: #777;
-  margin-bottom: 40px;
+  margin-bottom: 20px;
 }
 
 .container {
   max-width: 600px;
   margin: auto;
   padding: 20px;
+}
+
+img {
+  width: 100%;
+  border-radius: 20px;
+  margin: 20px 0;
 }
 
 button {
@@ -44,32 +49,20 @@ button {
   font-size: 1em;
   margin: 12px 0;
   cursor: pointer;
-  transition: all 0.3s ease;
   width: 100%;
-}
-
-button:hover {
-  background: #ff6f91;
-  box-shadow: 0 0 15px rgba(255,111,145,0.6);
 }
 
 .message {
   display: none;
   margin-top: 10px;
   font-size: 1.05em;
-  animation: fadeIn 1s ease forwards;
 }
 
 .final {
   display: none;
-  margin-top: 40px;
+  margin-top: 30px;
   font-size: 1.2em;
   font-family: 'Playfair Display', serif;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
 }
 
 /* Cuori */
@@ -82,13 +75,20 @@ button:hover {
 }
 
 @keyframes float {
-  0% { transform: translateY(0); opacity: 0.6; }
+  0% { transform: translateY(0); }
   100% { transform: translateY(-110vh); opacity: 0; }
 }
 
-.music {
-  margin-top: 30px;
-  font-size: 0.9em;
+/* Musica */
+.music-box {
+  margin: 25px 0;
+}
+
+iframe {
+  display: none;
+  margin-top: 15px;
+  width: 100%;
+  border-radius: 12px;
 }
 </style>
 </head>
@@ -100,23 +100,36 @@ button:hover {
 
 <div class="container">
 
-<button onclick="reveal(0)">Apri se ti manco</button>
+<img src="IMG_3731.png" alt="Noi">
+
+<div class="music-box">
+  <button onclick="playMusic()">🎶 Ascolta la nostra canzone</button>
+  <iframe id="musicPlayer"
+    src="https://www.youtube.com/embed/9yD5tM4dE0E?autoplay=1"
+    allow="autoplay; encrypted-media"
+    allowfullscreen>
+  </iframe>
+</div>
+
+<button onclick="unlock(0)">🔒 1/6 Apri se ti manco</button>
 <div class="message">Non importa dove siamo: una parte di me ti sta sempre cercando.</div>
 
-<button onclick="reveal(1)">Clicca se sorridi</button>
+<button onclick="unlock(1)">🔒 2/6 Clicca se sorridi</button>
 <div class="message">Il tuo sorriso è il mio posto sicuro.</div>
 
-<button onclick="reveal(2)">Solo per te</button>
+<button onclick="unlock(2)">🔒 3/6 Solo per te</button>
 <div class="message">Ti sceglierei anche nei giorni difficili. Soprattutto in quelli.</div>
 
-<button onclick="reveal(3)">Un segreto ❤️</button>
+<button onclick="unlock(3)">🔒 4/6 Un segreto ❤️</button>
 <div class="message">Non sei un capitolo della mia vita. Sei il libro.</div>
 
-<button onclick="reveal(4)">Quando dubiti</button>
+<button onclick="unlock(4)">🔒 5/6 Quando dubiti</button>
 <div class="message">Sei abbastanza. Sempre stata. Sempre sarai.</div>
 
-<button onclick="reveal(5)">Promessa</button>
+<button onclick="unlock(5)">🔒 6/6 Promessa</button>
 <div class="message">Finché avrò un domani, ci sarà un “noi”.</div>
+
+<img src="IMG_3730.png" alt="Sempre noi">
 
 <div class="final" id="finalMessage">
 Se sei arrivata fin qui,<br>
@@ -124,28 +137,34 @@ significa che sei la cosa più bella<br>
 che mi sia mai successa.
 </div>
 
-<div class="music">
-<button onclick="toggleMusic()">🎶 Musica</button>
 </div>
-
-</div>
-
-<audio id="bgMusic" loop>
-  <source src="https://cdn.pixabay.com/audio/2022/03/15/audio_5c1a8c9e99.mp3" type="audio/mpeg">
-</audio>
 
 <script>
+const passwords = [
+  "ti amo",
+  "14ottobre",
+  "14novembre",
+  "ioete",
+  "noipersempre",
+  "noipersempre"
+];
+
 let opened = 0;
 
-function reveal(index) {
-  const messages = document.querySelectorAll('.message');
-  if (messages[index].style.display !== "block") {
-    messages[index].style.display = "block";
-    opened++;
-    spawnHeart();
-  }
-  if (opened === messages.length) {
-    document.getElementById("finalMessage").style.display = "block";
+function unlock(index) {
+  const input = prompt("Inserisci la password 💌");
+  if (input === passwords[index]) {
+    const messages = document.querySelectorAll('.message');
+    if (messages[index].style.display !== "block") {
+      messages[index].style.display = "block";
+      opened++;
+      spawnHeart();
+    }
+    if (opened === messages.length) {
+      document.getElementById("finalMessage").style.display = "block";
+    }
+  } else {
+    alert("Non ancora 😉");
   }
 }
 
@@ -154,21 +173,13 @@ function spawnHeart() {
   heart.className = "heart";
   heart.innerHTML = "❤️";
   heart.style.left = Math.random() * 100 + "vw";
-  heart.style.animationDuration = (4 + Math.random() * 3) + "s";
   document.body.appendChild(heart);
   setTimeout(() => heart.remove(), 6000);
 }
 
-let playing = false;
-function toggleMusic() {
-  const music = document.getElementById("bgMusic");
-  if (!playing) {
-    music.play();
-    playing = true;
-  } else {
-    music.pause();
-    playing = false;
-  }
+function playMusic() {
+  const player = document.getElementById("musicPlayer");
+  player.style.display = "block";
 }
 </script>
 
