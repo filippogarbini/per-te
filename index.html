@@ -11,21 +11,25 @@
 body {
   margin: 0;
   font-family: 'Poppins', sans-serif;
-  background: linear-gradient(180deg, #ffe6ec, #fff);
-  color: #333;
+  background: linear-gradient(180deg, #ffccd5, #fff0f3);
+  color: #5a1a1a;
   text-align: center;
+  overflow-x: hidden;
 }
 
 h1 {
   font-family: 'Playfair Display', serif;
-  font-size: 2.5em;
+  font-size: 2.6em;
   margin-top: 30px;
+  color: #b11226;
 }
 
 .subtitle {
   font-size: 1em;
-  color: #777;
-  margin-bottom: 20px;
+  color: #7a2c2c;
+  margin: 15px auto 30px;
+  max-width: 500px;
+  line-height: 1.6;
 }
 
 .container {
@@ -37,51 +41,65 @@ h1 {
 img {
   width: 100%;
   border-radius: 20px;
-  margin: 20px 0;
+  margin: 25px 0;
+  display: none;
+  animation: fadeIn 1.4s ease forwards;
 }
 
 button {
-  background: #ff8fa3;
+  background: linear-gradient(135deg, #ff4d6d, #c9184a);
   border: none;
   border-radius: 30px;
-  padding: 14px 22px;
+  padding: 15px 22px;
   color: white;
   font-size: 1em;
   margin: 12px 0;
   cursor: pointer;
   width: 100%;
+  box-shadow: 0 6px 15px rgba(201,24,74,0.4);
+}
+
+button:hover {
+  transform: scale(1.03);
 }
 
 .message {
   display: none;
   margin-top: 10px;
   font-size: 1.05em;
+  animation: fadeIn 1s ease forwards;
 }
 
 .final {
   display: none;
-  margin-top: 30px;
-  font-size: 1.2em;
+  margin-top: 35px;
+  font-size: 1.3em;
   font-family: 'Playfair Display', serif;
+  color: #b11226;
 }
 
 /* Cuori */
 .heart {
   position: fixed;
   bottom: -20px;
-  font-size: 20px;
-  animation: float 6s linear infinite;
-  opacity: 0.6;
+  font-size: 22px;
+  animation: float 7s linear infinite;
+  opacity: 0.7;
 }
 
 @keyframes float {
   0% { transform: translateY(0); }
-  100% { transform: translateY(-110vh); opacity: 0; }
+  100% { transform: translateY(-120vh); opacity: 0; }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 /* Musica */
 .music-box {
-  margin: 25px 0;
+  margin: 30px 0;
 }
 
 iframe {
@@ -96,11 +114,15 @@ iframe {
 <body>
 
 <h1>Per te ❤️</h1>
-<div class="subtitle">Aprilo ogni volta che ti manco</div>
+
+<div class="subtitle">
+Ogni giorno, dal <strong>9 al 14 febbraio</strong>,<br>
+ti darò una password.<br>
+Un piccolo messaggio alla volta,<br>
+come il mio modo di dirti che ti amo.
+</div>
 
 <div class="container">
-
-<img src="IMG_3731.png" alt="Noi">
 
 <div class="music-box">
   <button onclick="playMusic()">🎶 Ascolta la nostra canzone</button>
@@ -111,30 +133,32 @@ iframe {
   </iframe>
 </div>
 
-<button onclick="unlock(0)">🔒 1/6 Apri se ti manco</button>
+<img id="fotoInizio" src="IMG_3731.png" alt="Noi">
+
+<button onclick="unlock(0)">🔒 9 Febbraio</button>
 <div class="message">Non importa dove siamo: una parte di me ti sta sempre cercando.</div>
 
-<button onclick="unlock(1)">🔒 2/6 Clicca se sorridi</button>
+<button onclick="unlock(1)">🔒 10 Febbraio</button>
 <div class="message">Il tuo sorriso è il mio posto sicuro.</div>
 
-<button onclick="unlock(2)">🔒 3/6 Solo per te</button>
+<button onclick="unlock(2)">🔒 11 Febbraio</button>
 <div class="message">Ti sceglierei anche nei giorni difficili. Soprattutto in quelli.</div>
 
-<button onclick="unlock(3)">🔒 4/6 Un segreto ❤️</button>
+<button onclick="unlock(3)">🔒 12 Febbraio</button>
 <div class="message">Non sei un capitolo della mia vita. Sei il libro.</div>
 
-<button onclick="unlock(4)">🔒 5/6 Quando dubiti</button>
+<button onclick="unlock(4)">🔒 13 Febbraio</button>
 <div class="message">Sei abbastanza. Sempre stata. Sempre sarai.</div>
 
-<button onclick="unlock(5)">🔒 6/6 Promessa</button>
+<button onclick="unlock(5)">🔒 14 Febbraio ❤️</button>
 <div class="message">Finché avrò un domani, ci sarà un “noi”.</div>
 
-<img src="IMG_3730.png" alt="Sempre noi">
+<img id="fotoFinale" src="IMG_3730.png" alt="Sempre noi">
 
 <div class="final" id="finalMessage">
-Se sei arrivata fin qui,<br>
-significa che sei la cosa più bella<br>
-che mi sia mai successa.
+Buon San Valentino ❤️<br>
+sei il mio oggi,<br>
+e tutti i miei domani.
 </div>
 
 </div>
@@ -160,6 +184,12 @@ function unlock(index) {
       opened++;
       spawnHeart();
     }
+    if (index === 0) {
+      document.getElementById("fotoInizio").style.display = "block";
+    }
+    if (index === 5) {
+      document.getElementById("fotoFinale").style.display = "block";
+    }
     if (opened === messages.length) {
       document.getElementById("finalMessage").style.display = "block";
     }
@@ -174,12 +204,11 @@ function spawnHeart() {
   heart.innerHTML = "❤️";
   heart.style.left = Math.random() * 100 + "vw";
   document.body.appendChild(heart);
-  setTimeout(() => heart.remove(), 6000);
+  setTimeout(() => heart.remove(), 7000);
 }
 
 function playMusic() {
-  const player = document.getElementById("musicPlayer");
-  player.style.display = "block";
+  document.getElementById("musicPlayer").style.display = "block";
 }
 </script>
 
